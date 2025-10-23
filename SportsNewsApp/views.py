@@ -5,6 +5,7 @@ from sportsnews.settings import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from .models import *
 from .serializers import *
 
