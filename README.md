@@ -9,13 +9,23 @@ Neprisijungęs vartotojas galės peržiūrėti naujienas, bei galės prisijungti
 # Funkciniai reikalavimai
 
 Neprisijungęs vartotojas:
-
+- Prisijungti
+- Registruotis
+- Peržiūrėti naujienas
 
 Prisijungęs vartotojas:
+- Atsijungti
+- Peržiurėti naujienas
+- Kurti naujienas
+- Redaguoti savo naujienas
+- Trinti savo naujienas
 
 Redaktorius:
+- Valdyti kategorijas
+- Valdyti naujienas
 
 Administratorius:
+- Valdyti vartotojus
 
 # Sistemos architektūra
 
