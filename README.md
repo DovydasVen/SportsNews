@@ -10,26 +10,26 @@ Neprisijungęs vartotojas galės peržiūrėti naujienas, bei galės prisijungti
 
 Neprisijungęs vartotojas:
 
-• Prisijungti
-• Registruotis
-• Peržiūrėti naujienas
+1 Prisijungti
+2 Registruotis
+3 Peržiūrėti naujienas
 
 Prisijungęs vartotojas:
 
-• Atsijungti
-• Peržiūrėti naujienas
-• Kurti naujienas
-• Redaguoti savo naujienas
-• Trinti savo naujienas
+1 Atsijungti
+2 Peržiūrėti naujienas
+3 Kurti naujienas
+4 Redaguoti savo naujienas
+5 Trinti savo naujienas
 
 Redaktorius:
 
-• Valdyti kategorijas
-• Valdyti naujienas
+1 Valdyti kategorijas
+2 Valdyti naujienas
 
 Administratorius:
 
-• Valdyti vartotojus
+1 Valdyti vartotojus
 
 # Sistemos architektūra
 
