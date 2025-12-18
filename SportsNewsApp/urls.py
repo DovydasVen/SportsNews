@@ -1,8 +1,15 @@
 from django.urls import path
 from . import views
+from drf_spectacular.utils import extend_schema
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from SportsNewsApp.serializers import CustomTokenSerializer
 
+
+@extend_schema(
+    request=CustomTokenSerializer,
+    responses={200: CustomTokenSerializer},
+    description="Login – grąžina access ir refresh tokenus su role"
+)
 class CustomTokenView(TokenObtainPairView):
     serializer_class = CustomTokenSerializer
 
