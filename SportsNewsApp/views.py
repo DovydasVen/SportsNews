@@ -2,7 +2,7 @@ from django.forms import ValidationError
 from django.shortcuts import render
 from django.http import JsonResponse
 from sportsnews.settings import *
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
@@ -11,6 +11,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from drf_spectacular.types import OpenApiTypes
 from .models import *
 from .serializers import *
+from .permissions import *
 
 def index(request):
     context = {}
@@ -29,6 +30,8 @@ def index(request):
         400: OpenApiTypes.OBJECT,
     },
 )
+
+@permission_classes([IsEditorOrAdmin])
 @api_view(['GET', 'POST'])
 def categoryListApi(request):
     if request.method == "GET":
@@ -71,6 +74,7 @@ def categoryListApi(request):
     },
 )
 
+@permission_classes([IsEditorOrAdmin])
 @api_view(['GET', 'PUT', 'DELETE'])
 def categoryDetailApi(request, id=None):
     try:
@@ -107,6 +111,7 @@ def categoryDetailApi(request, id=None):
     },
 )
 
+@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET', 'POST'])
 def postListApi(request, id=None):
     if request.method == "GET":
@@ -117,7 +122,7 @@ def postListApi(request, id=None):
     elif request.method == "POST":
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(author = request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -151,6 +156,8 @@ def postListApi(request, id=None):
         404: OpenApiTypes.NONE,
     },
 )
+
+@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET','PUT','DELETE'])
 def postDetailApi(request, id=None, id2=None):
     try:
@@ -189,6 +196,7 @@ def postDetailApi(request, id=None, id2=None):
         400: OpenApiTypes.OBJECT,
     },
 )
+@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET','POST'])
 def commentListApi(request, id=None, id2=None):
     if request.method == "GET":
@@ -199,7 +207,7 @@ def commentListApi(request, id=None, id2=None):
     elif request.method == "POST":
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(author = request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -233,6 +241,8 @@ def commentListApi(request, id=None, id2=None):
         404: OpenApiTypes.NONE,
     },
 )
+
+@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET','PUT','DELETE'])
 def commentDetailApi(request, id=None, id2=None, id3=None):
     try:
@@ -267,6 +277,7 @@ class CustomTokenView(TokenObtainPairView):
     responses={201: RegisterSerializer},
     description="Registers new USER account"
 )
+
 @api_view(['POST'])
 def register_api(request):
     serializer = RegisterSerializer(data=request.data)
