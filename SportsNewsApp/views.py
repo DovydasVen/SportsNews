@@ -28,6 +28,8 @@ def index(request):
     responses={
         201: CategorySerializer,
         400: OpenApiTypes.OBJECT,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -63,6 +65,8 @@ def categoryListApi(request):
         200: CategorySerializer,
         400: OpenApiTypes.OBJECT,
         404: OpenApiTypes.NONE,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -70,7 +74,9 @@ def categoryListApi(request):
     methods=['DELETE'],
     responses={
         204: OpenApiTypes.NONE,
-        404: OpenApiTypes.NONE,
+        404: OpenApiTypes.NONE,        
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -99,7 +105,9 @@ def categoryDetailApi(request, id=None):
 @extend_schema(
     methods=['GET'],
     parameters=[OpenApiParameter("id", int, location=OpenApiParameter.PATH)],
-    responses={200: PostSerializer(many=True)},
+    responses={
+        200: PostSerializer(many=True)
+    },
 )
 
 @extend_schema(
@@ -108,6 +116,8 @@ def categoryDetailApi(request, id=None):
     responses={
         201: PostSerializer,
         400: OpenApiTypes.OBJECT,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -146,6 +156,8 @@ def postListApi(request, id=None):
         200: PostSerializer,
         400: OpenApiTypes.OBJECT,
         404: OpenApiTypes.NONE,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -154,6 +166,8 @@ def postListApi(request, id=None):
     responses={
         204: OpenApiTypes.NONE,
         404: OpenApiTypes.NONE,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -194,6 +208,8 @@ def postDetailApi(request, id=None, id2=None):
     responses={
         201: CommentSerializer,
         400: OpenApiTypes.OBJECT,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 @permission_classes([IsOwnerOrEditorOrAdmin])
@@ -231,6 +247,8 @@ def commentListApi(request, id=None, id2=None):
         200: CommentSerializer,
         400: OpenApiTypes.OBJECT,
         404: OpenApiTypes.NONE,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 
@@ -239,6 +257,8 @@ def commentListApi(request, id=None, id2=None):
     responses={
         204: OpenApiTypes.NONE,
         404: OpenApiTypes.NONE,
+        **UNAUTHORIZED_RESPONSE,
+        **FORBIDDEN_RESPONSE,
     },
 )
 

@@ -71,7 +71,10 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ),
 }
 
 SPECTACULAR_SETTINGS = {
@@ -79,6 +82,9 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API for Sports News APP',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'AUTHENTICATION_SCHEMES': [
+        'drf_spectacular.extensions.SimpleJWTScheme',
+    ],
 }
 
 ROOT_URLCONF = 'sportsnews.urls'
