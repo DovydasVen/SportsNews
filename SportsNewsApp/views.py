@@ -33,8 +33,9 @@ def index(request):
     },
 )
 
-@permission_classes([IsEditorOrAdmin])
+
 @api_view(['GET', 'POST'])
+@permission_classes([IsEditorOrAdmin])
 def categoryListApi(request):
     if request.method == "GET":
         categories = Category.objects.all()
@@ -80,8 +81,8 @@ def categoryListApi(request):
     },
 )
 
-@permission_classes([IsEditorOrAdmin])
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsEditorOrAdmin])
 def categoryDetailApi(request, id=None):
     try:
         category = Category.objects.get(pk=id)
@@ -121,8 +122,8 @@ def categoryDetailApi(request, id=None):
     },
 )
 
-@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET', 'POST'])
+@permission_classes([IsOwnerOrEditorOrAdmin])
 def postListApi(request, id=None):
     if request.method == "GET":
         posts = Post.objects.filter(category_id=id)
