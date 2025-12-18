@@ -171,8 +171,8 @@ def postListApi(request, id=None):
     },
 )
 
-@permission_classes([IsOwnerOrEditorOrAdmin])
 @api_view(['GET','PUT','DELETE'])
+@permission_classes([IsOwnerOrEditorOrAdmin])
 def postDetailApi(request, id=None, id2=None):
     try:
         post = Post.objects.filter(category_id=id).get(pk=id2)
@@ -212,8 +212,9 @@ def postDetailApi(request, id=None, id2=None):
         **FORBIDDEN_RESPONSE,
     },
 )
-@permission_classes([IsOwnerOrEditorOrAdmin])
+
 @api_view(['GET','POST'])
+@permission_classes([IsOwnerOrEditorOrAdmin])
 def commentListApi(request, id=None, id2=None):
     if request.method == "GET":
         comments = Comment.objects.filter(post_id=id2)
@@ -262,8 +263,9 @@ def commentListApi(request, id=None, id2=None):
     },
 )
 
-@permission_classes([IsOwnerOrEditorOrAdmin])
+
 @api_view(['GET','PUT','DELETE'])
+@permission_classes([IsOwnerOrEditorOrAdmin])
 def commentDetailApi(request, id=None, id2=None, id3=None):
     try:
         comment = Comment.objects.filter(post_id=id2).get(pk=id3)
@@ -287,7 +289,7 @@ def commentDetailApi(request, id=None, id2=None, id3=None):
 @extend_schema(
     request=CustomTokenSerializer,
     responses={200: LoginResponseSerializer},
-    description="Login – grąžina access ir refresh tokenus su role"
+    description="Login – returns access and refresh tokens"
 )
 class CustomTokenView(TokenObtainPairView):
     serializer_class = CustomTokenSerializer
