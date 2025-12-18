@@ -31,6 +31,6 @@ urlpatterns = [
     path("api/categories/<int:id>/posts/<int:id2>/comments/<int:id3>", views.commentDetailApi),
 
     path("api/register/", views.register_api, name="register"),
-    path("api/login/", CustomTokenView.as_view(), name="token_obtain_pair"),
+    path("api/login/", views.CustomTokenView.as_view(), name="token_obtain_pair"),
     path("api/refresh/", views.CustomRefreshView.as_view(), name="token_refresh"),
 ]
