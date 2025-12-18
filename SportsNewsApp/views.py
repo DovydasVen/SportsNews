@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 from .models import *
@@ -253,6 +254,19 @@ def commentDetailApi(request, id=None, id2=None, id3=None):
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+@extend_schema(
+    request=TokenRefreshSerializer,
+    responses={200: TokenRefreshSerializer},
+    description="Refresh – grąžina naują access token"
+)
+class CustomRefreshView(TokenRefreshView):
+    pass
+
+@extend_schema(
+    request=RegisterSerializer,
+    responses={201: RegisterSerializer},
+    description="Registers new USER account"
+)
 @api_view(['POST'])
 def register_api(request):
     serializer = RegisterSerializer(data=request.data)
