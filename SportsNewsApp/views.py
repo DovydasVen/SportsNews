@@ -251,3 +251,15 @@ def commentDetailApi(request, id=None, id2=None, id3=None):
     elif request.method == "DELETE":
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['POST'])
+def register_api(request):
+    serializer = RegisterSerializer(data=request.data)
+
+    if serializer.is_valid():
+        user = serializer.save()
+
+        return Response( {"user": { "id": user.id, "username": user.username, "email": user.email, "role": user.role}},
+            status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
