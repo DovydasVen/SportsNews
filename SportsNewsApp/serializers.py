@@ -17,6 +17,12 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['id', 'text', 'post']
 
+class LoginResponseSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+    access = serializers.CharField()
+    username = serializers.CharField()
+    role = serializers.CharField()
+
 class CustomTokenSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):

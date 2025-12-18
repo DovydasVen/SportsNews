@@ -255,12 +255,12 @@ def commentDetailApi(request, id=None, id2=None, id3=None):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 @extend_schema(
-    request=TokenRefreshSerializer,
-    responses={200: TokenRefreshSerializer},
-    description="Refresh – grąžina naują access token"
+    request=CustomTokenSerializer,
+    responses={200: LoginResponseSerializer},
+    description="Login – grąžina access ir refresh tokenus su role"
 )
-class CustomRefreshView(TokenRefreshView):
-    pass
+class CustomTokenView(TokenObtainPairView):
+    serializer_class = CustomTokenSerializer
 
 @extend_schema(
     request=RegisterSerializer,
