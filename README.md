@@ -30,7 +30,7 @@ Administratorius:
 # Sistemos architektūra
 
 Sistemos sudedamosios dalys:
-• Kliento pusė realizuota naudojant React
-• Serverio pusė realizuota naudojant Python Django, o duomenų bazei bus naudojama Postgres
+- Kliento pusė realizuota naudojant React
+- Serverio pusė realizuota naudojant Python Django, o duomenų bazei bus naudojama Postgres
 
 ![alt text](Deployement.png)

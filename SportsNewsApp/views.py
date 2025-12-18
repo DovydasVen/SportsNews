@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 from .models import *
 from .serializers import *
 
@@ -13,132 +14,240 @@ def index(request):
     context = {}
     return render(request, "pages/index.html", context=context)
 
-@api_view(['GET','POST','PUT',"DELETE"])
-def categoryApi(request, id=None):
+@extend_schema(
+    methods=['GET'],
+    responses={200: CategorySerializer(many=True)},
+)
+
+@extend_schema(
+    methods=['POST'],
+    request=CategorySerializer,
+    responses={
+        201: CategorySerializer,
+        400: OpenApiTypes.OBJECT,
+    },
+)
+@api_view(['GET', 'POST'])
+def categoryListApi(request):
     if request.method == "GET":
-        if id:
-            try:
-                category = Category.objects.get(pk=id)
-            except:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-            
-            serializer = CategorySerializer(category)
-            return Response(serializer.data)
-        else:
-            categories = Category.objects.all()
-            serializer = CategorySerializer(categories, many = True)
-            return Response({'categories:': serializer.data})
-        
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
     elif request.method == "POST":
-        serializer =  CategorySerializer(data = request.data)
+        serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(
+    methods=['GET'],
+    parameters=[OpenApiParameter("id", int, location=OpenApiParameter.PATH)],
+    responses={
+        200: CategorySerializer,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['PUT'],
+    request=CategorySerializer,
+    responses={
+        200: CategorySerializer,
+        400: OpenApiTypes.OBJECT,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['DELETE'],
+    responses={
+        204: OpenApiTypes.NONE,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def categoryDetailApi(request, id=None):
+    try:
+        category = Category.objects.get(pk=id)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        return Response(CategorySerializer(category).data)
+
     elif request.method == "PUT":
-        try:
-            category = Category.objects.get(pk=id)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = CategorySerializer(category, data = request.data) 
+        serializer = CategorySerializer(category, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     elif request.method == "DELETE":
-        try:
-            category = Category.objects.get(pk=id)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+@extend_schema(
+    methods=['GET'],
+    parameters=[OpenApiParameter("id", int, location=OpenApiParameter.PATH)],
+    responses={200: PostSerializer(many=True)},
+)
 
-@api_view(['GET','POST','PUT',"DELETE"])
-def postApi(request, id=None, id2=None):
+@extend_schema(
+    methods=['POST'],
+    request=PostSerializer,
+    responses={
+        201: PostSerializer,
+        400: OpenApiTypes.OBJECT,
+    },
+)
+
+@api_view(['GET', 'POST'])
+def postListApi(request, id=None):
     if request.method == "GET":
-        if id and id2:
-            try:
-                post = Post.objects.filter(category_id = id).get(pk=id2)
-            except:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-            serializer = PostSerializer(post)
-            return Response(serializer.data)
-        
-        else:
-            posts = Post.objects.filter(category_id = id)
-            serializer = PostSerializer(posts, many = True)
-            return Response({'posts:': serializer.data})
-        
+        posts = Post.objects.filter(category_id=id)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
     elif request.method == "POST":
-        serializer = PostSerializer(data = request.data)
+        serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-        
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(
+    methods=['GET'],
+    parameters=[
+        OpenApiParameter("id", int, location=OpenApiParameter.PATH),
+        OpenApiParameter("id2", int, location=OpenApiParameter.PATH),
+    ],
+    responses={
+        200: PostSerializer,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['PUT'],
+    request=PostSerializer,
+    responses={
+        200: PostSerializer,
+        400: OpenApiTypes.OBJECT,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['DELETE'],
+    responses={
+        204: OpenApiTypes.NONE,
+        404: OpenApiTypes.NONE,
+    },
+)
+@api_view(['GET','PUT','DELETE'])
+def postDetailApi(request, id=None, id2=None):
+    try:
+        post = Post.objects.filter(category_id=id).get(pk=id2)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        return Response(PostSerializer(post).data)
+
     elif request.method == "PUT":
-        try:
-            post = Post.objects.get(pk=id2)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = PostSerializer(post, data = request.data) 
+        serializer = PostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     elif request.method == "DELETE":
-        try:
-            post = Post.objects.get(pk=id2)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+@extend_schema(
+    methods=['GET'],
+    parameters=[
+        OpenApiParameter("id", int, location=OpenApiParameter.PATH),
+        OpenApiParameter("id2", int, location=OpenApiParameter.PATH),
+    ],
+    responses={200: CommentSerializer(many=True)},
+)
 
-@api_view(['GET','POST','PUT',"DELETE"])
-def commentApi(request, id=None, id2=None, id3=None):
+@extend_schema(
+    methods=['POST'],
+    request=CommentSerializer,
+    responses={
+        201: CommentSerializer,
+        400: OpenApiTypes.OBJECT,
+    },
+)
+@api_view(['GET','POST'])
+def commentListApi(request, id=None, id2=None):
     if request.method == "GET":
-        if id and id2 and id3:
-            try:
-                comment = Comment.objects.filter(post_id = id2).get(pk=id3)
-            except:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-            serializer = CommentSerializer(comment)
-            return Response(serializer.data)
-        
-        else:
-            comments = Comment.objects.filter(post_id = id2)
-            serializer = CommentSerializer(comments, many = True)
-            return Response({'comments:': serializer.data})
-        
+        comments = Comment.objects.filter(post_id=id2)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
     elif request.method == "POST":
-        serializer =  CommentSerializer(data = request.data)
+        serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@extend_schema(
+    methods=['GET'],
+    parameters=[
+        OpenApiParameter("id", int, location=OpenApiParameter.PATH),
+        OpenApiParameter("id2", int, location=OpenApiParameter.PATH),
+        OpenApiParameter("id3", int, location=OpenApiParameter.PATH),
+    ],
+    responses={
+        200: CommentSerializer,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['PUT'],
+    request=CommentSerializer,
+    responses={
+        200: CommentSerializer,
+        400: OpenApiTypes.OBJECT,
+        404: OpenApiTypes.NONE,
+    },
+)
+
+@extend_schema(
+    methods=['DELETE'],
+    responses={
+        204: OpenApiTypes.NONE,
+        404: OpenApiTypes.NONE,
+    },
+)
+@api_view(['GET','PUT','DELETE'])
+def commentDetailApi(request, id=None, id2=None, id3=None):
+    try:
+        comment = Comment.objects.filter(post_id=id2).get(pk=id3)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        return Response(CommentSerializer(comment).data)
 
     elif request.method == "PUT":
-        try:
-            comment = Comment.objects.get(pk=id3)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = CommentSerializer(comment, data = request.data) 
+        serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     elif request.method == "DELETE":
-        try:
-            comment = Comment.objects.get(pk=id3)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

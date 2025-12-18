@@ -5,15 +5,16 @@ urlpatterns = [
     path("", views.index, name="index"),
 
     # API URLs
-    #Category
-    path("api/categories", views.categoryApi, name="categoryList"),
-    path("api/categories/<int:id>", views.categoryApi, name="categoryById"),
 
-    #Post
-    path("api/categories/<int:id>/posts", views.postApi, name="postList"),
-    path("api/categories/<int:id>/posts/<int:id2>", views.postApi, name="postById"),
+    # Category
+    path("api/categories", views.categoryListApi),
+    path("api/categories/<int:id>", views.categoryDetailApi),
+
+    #Posts
+    path("api/categories/<int:id>/posts", views.postListApi),
+    path("api/categories/<int:id>/posts/<int:id2>", views.postDetailApi),
 
     #Comments
-    path("api/categories/<int:id>/posts/<int:id2>/comments", views.commentApi, name="commentList"),
-    path("api/categories/<int:id>/posts/<int:id2>/comments/<int:id3>", views.commentApi, name="commentById"),
+    path("api/categories/<int:id>/posts/<int:id2>/comments", views.commentListApi),
+    path("api/categories/<int:id>/posts/<int:id2>/comments/<int:id3>", views.commentDetailApi),
 ]
