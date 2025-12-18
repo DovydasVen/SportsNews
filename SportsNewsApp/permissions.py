@@ -1,13 +1,16 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import OpenApiResponse
+from drf_spectacular.utils import OpenApiResponse, OpenApiExample
 
 UNAUTHORIZED_RESPONSE = {
     401: OpenApiResponse(
         description="Authentication credentials are missing or invalid",
         response=OpenApiTypes.OBJECT,
         examples=[
-            {"detail": "Authentication credentials were not provided."}
+            OpenApiExample(
+                "Unauthorized",
+                value={"detail": "Authentication credentials were not provided."}
+            )
         ]
     )
 }
@@ -17,7 +20,10 @@ FORBIDDEN_RESPONSE = {
         description="You do not have permission to perform this action",
         response=OpenApiTypes.OBJECT,
         examples=[
-            {"detail": "You do not have permission to perform this action."}
+            OpenApiExample(
+                "Forbidden",
+                value={"detail": "You do not have permission to perform this action."}
+            )
         ]
     )
 }
