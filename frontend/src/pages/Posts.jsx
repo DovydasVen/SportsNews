@@ -79,10 +79,15 @@ export default function PostDetail() {
         <i className="fa-solid fa-chevron-left me-1"></i> Grįžti atgal
       </Link>
 
+      <h2>{post.title}</h2>
+
+      <p className="text-muted">
+        Paskelbė <b>{post.author}</b>
+      </p>
+
       <div className="card-forum mb-3">
         <div className="d-flex justify-content-between align-items-start">
           <div>
-            <h3 className="mb-2">{post.title}</h3>
             <p style={{ color: "#e5e7eb" }}>{post.text}</p>
           </div>
           <button
@@ -99,7 +104,10 @@ export default function PostDetail() {
       {comments.map((c) => (
         <div key={c.id} className="card-forum">
           <div className="d-flex justify-content-between align-items-start">
-            <p className="mb-1">{c.text}</p>
+            <div>
+              <h4 className="color:white">{c.author} parašė: </h4>
+              <p className="mb-1">{c.text}</p>
+            </div>
             <button
               className="btn btn-sm btn-outline-danger btn-pill"
               onClick={() => deleteComment(c.id)}>
