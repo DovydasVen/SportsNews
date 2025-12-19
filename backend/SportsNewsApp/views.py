@@ -181,6 +181,13 @@ def postDetailApi(request, id=None, id2=None):
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    checker = IsOwnerOrEditorOrAdmin()
+
+    if request.method in ["PUT", "DELETE"]:
+        if not checker.has_object_permission(request, None, post):
+            return Response({"detail": "You do not have permission to perform this action."},
+                            status=status.HTTP_403_FORBIDDEN)
+
     if request.method == "GET":
         return Response(PostSerializer(post).data)
 
@@ -277,6 +284,13 @@ def commentDetailApi(request, id=None, id2=None, id3=None):
         comment = Comment.objects.filter(post_id=id2).get(pk=id3)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    checker = IsOwnerOrEditorOrAdmin()
+
+    if request.method in ["PUT", "DELETE"]:
+        if not checker.has_object_permission(request, None, comment):
+            return Response({"detail": "You do not have permission to perform this action."},
+                            status=status.HTTP_403_FORBIDDEN)
 
     if request.method == "GET":
         return Response(CommentSerializer(comment).data)
