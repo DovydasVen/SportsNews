@@ -54,7 +54,7 @@ export default function PostDetail() {
     load();
   };
 
-  if (!post) return <div className="page-container">Loading...</div>;
+  if (!post) return <div className="page-container">Kraunasi</div>;
 
   return (
     <div className="page-container">
@@ -62,7 +62,7 @@ export default function PostDetail() {
         to={`/categories/${categoryId}`}
         className="text-decoration-none mb-2 d-inline-flex align-items-center"
       >
-        <i className="fa-solid fa-chevron-left me-1"></i> Back to posts
+        <i className="fa-solid fa-chevron-left me-1"></i> Atgal prie post'u
       </Link>
 
       <div className="card-forum mb-3">
@@ -80,7 +80,7 @@ export default function PostDetail() {
         </div>
       </div>
 
-      <h5 className="mb-3">Comments ({comments.length})</h5>
+      <h5 className="mb-3">Komentarai ({comments.length})</h5>
 
       {comments.map((c) => (
         <div key={c.id} className="card-forum">
@@ -97,17 +97,17 @@ export default function PostDetail() {
       ))}
 
       {comments.length === 0 && (
-        <p className="text-muted">No comments yet. Be the first!</p>
+        <p className="text-muted">Komentarų nėra</p>
       )}
 
       {isLoggedIn && (
         <div className="card-forum mt-3">
-          <h6 className="mb-2">Add a reply</h6>
+          <h6 className="mb-2">Pridėkite komentarą</h6>
           <form onSubmit={addComment}>
             <textarea
               className="form-control mb-2"
               rows={3}
-              placeholder="Your comment..."
+              placeholder="Komentaras"
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
@@ -120,8 +120,8 @@ export default function PostDetail() {
 
       <ConfirmModal
         show={showDelete}
-        title="Delete post"
-        text="Are you sure you want to delete this post? Comments will also be removed."
+        title="Ištrinti postą"
+        text="Ar tikrai norite ištrinti? Komentarai taip pat bus ištrinti."
         onConfirm={deletePost}
         onClose={() => setShowDelete(false)}
       />

@@ -134,7 +134,7 @@ def postListApi(request, id=None):
     elif request.method == "POST":
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(author = request.user)
+            serializer.save(author = request.user, category=Category.objects.get(pk=id))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -226,8 +226,12 @@ def commentListApi(request, id=None, id2=None):
     elif request.method == "POST":
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(author = request.user)
+            serializer.save(
+                author=request.user,
+                post=Post.objects.get(pk=id2)
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @extend_schema(

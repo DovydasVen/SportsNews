@@ -36,6 +36,12 @@ class IsEditorOrAdmin(BasePermission):
         )
 
 class IsOwnerOrEditorOrAdmin(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+
+        return request.user.is_authenticated
+
     def has_object_permission(self, request, view, obj):
         if request.method in SAFE_METHODS:
             return True
@@ -43,7 +49,7 @@ class IsOwnerOrEditorOrAdmin(BasePermission):
         if not request.user.is_authenticated:
             return False
 
-        if request.user.role in ["ADMIN", "EDITOR"]:
+        if getattr(request.user, "role", None) in ["ADMIN", "EDITOR"]:
             return True
-
+        
         return hasattr(obj, "author_id") and obj.author_id == request.user.id

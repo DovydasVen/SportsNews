@@ -26,11 +26,10 @@ export default function Categories() {
 
   return (
     <div className="page-container">
-      <h2 className="mb-3">Categories</h2>
 
       <RoleGuard allowed={["EDITOR", "ADMIN"]}>
         <div className="card-forum mb-4">
-          <h5 className="mb-2">Create category</h5>
+          <h5 className="mb-2">Sukurti kategorija</h5>
           <form onSubmit={createCategory} className="d-flex gap-2">
             <input
               className="form-control"
@@ -54,7 +53,6 @@ export default function Categories() {
           <div>
             <h5 className="mb-1">{c.name}</h5>
             <small style={{ color: "#9ca3af" }}>
-              Click to view posts in this category
             </small>
           </div>
           <i className="fa-solid fa-chevron-right"></i>

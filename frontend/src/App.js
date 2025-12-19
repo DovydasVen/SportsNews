@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Categories from "./pages/Categories";
 import CategoryPosts from "./pages/CategoryPosts";
-import PostDetail from "./pages/PostDetail";
+import Posts from "./pages/Posts";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
             <Route path="/categories/:categoryId" element={<CategoryPosts />} />
             <Route
               path="/categories/:categoryId/posts/:postId"
-              element={<PostDetail />}
+              element={<Posts />}
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

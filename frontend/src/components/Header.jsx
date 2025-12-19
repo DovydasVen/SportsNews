@@ -25,7 +25,6 @@ export default function Header() {
     <header className="header">
       <div className="header-inner">
         <Link to="/" className="logo">
-          <i className="fa-solid fa-football"></i>
           <span>Sports Forum</span>
         </Link>
 
@@ -51,7 +50,7 @@ export default function Header() {
                 className="btn btn-sm btn-outline-light btn-pill"
                 onClick={logout}
               >
-                Logout
+                Atsijungti
               </button>
             </>
           ) : (
