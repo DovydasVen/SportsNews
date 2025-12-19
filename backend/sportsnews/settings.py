@@ -46,10 +46,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SportsNewsApp',
     'rest_framework',
-    'drf_spectacular'
+    'drf_spectacular',
+    "corsheaders",
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://sportnewssite.vercel.app",
+]
+
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
