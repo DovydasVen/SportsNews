@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://sportsnewssite-api.vercel.app/api",
+  baseURL: "https://sportsnewssite-api.vercel.app/",
 });
 
 // Jei turim token, automatiškai dedam į header
