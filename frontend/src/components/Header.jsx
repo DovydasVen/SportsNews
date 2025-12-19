@@ -38,10 +38,6 @@ export default function Header() {
         </button>
 
         <nav className={`nav-links ${open ? "open" : ""}`}>
-          <Link className="nav-link" to="/categories" onClick={() => setOpen(false)}>
-            Categories
-          </Link>
-
           {username ? (
             <>
               <div className="user-pill">
