@@ -8,14 +8,20 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Post
-        fields = ['id', 'title', 'text', 'category']
+        fields = ['id', 'title', 'text', 'category', 'author']
+        read_only_fields = ['category', 'author']
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Comment
-        fields = ['id', 'text', 'post']
+        fields = ['id', 'text', 'post', 'author']
+        read_only_fields = ['post', 'author']
 
 class LoginResponseSerializer(serializers.Serializer):
     refresh = serializers.CharField()
