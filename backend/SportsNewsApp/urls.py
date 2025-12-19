@@ -5,7 +5,6 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from SportsNewsApp.serializers import CustomTokenSerializer
 
 urlpatterns = [
-    path("", views.index, name="index"),
 
     # API URLs
     # Category
