@@ -2,34 +2,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
-export default function Login() {
+export default function Register() {
   const [username, setU] = useState("");
+  const [email, setE] = useState("");
   const [password, setP] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const login = async (e) => {
+  const register = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const res = await api.post("/api/login/", { username, password });
-      localStorage.setItem("access", res.data.access);
-      localStorage.setItem("refresh", res.data.refresh);
-      localStorage.setItem("role", res.data.role);
-      localStorage.setItem("username", res.data.username);
-      navigate("/");
+      await api.post("/api/register/", { username, email, password });
+      navigate("/login");
     } catch (err) {
-      setError("Neteisingas vartotojo vardas arba slaptažodis");
+      setError("Registracija nepavyko (patikrink laukus ar ar vartotojas unikalus).");
     }
   };
 
   return (
     <div className="page-container">
       <div className="card-forum" style={{ maxWidth: 420, margin: "2rem auto" }}>
-        <h2 className="mb-3">Login</h2>
+        <h2 className="mb-3">Register</h2>
         {error && <div className="alert alert-danger">{error}</div>}
 
-        <form onSubmit={login}>
+        <form onSubmit={register}>
           <div className="mb-3">
             <label className="form-label">Username</label>
             <input
@@ -37,6 +34,16 @@ export default function Login() {
               value={username}
               onChange={(e) => setU(e.target.value)}
               required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={email}
+              onChange={(e) => setE(e.target.value)}
             />
           </div>
 
@@ -51,8 +58,8 @@ export default function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 btn-pill">
-            Login
+          <button type="submit" className="btn btn-success w-100 btn-pill">
+            Create account
           </button>
         </form>
       </div>
