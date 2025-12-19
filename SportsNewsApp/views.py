@@ -9,6 +9,7 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
+from rest_framework.permissions import AllowAny
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -302,6 +303,7 @@ class CustomTokenView(TokenObtainPairView):
 )
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register_api(request):
     serializer = RegisterSerializer(data=request.data)
 
