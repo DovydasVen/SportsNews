@@ -43,15 +43,29 @@ export default function PostDetail() {
   };
 
   const deletePost = async () => {
-    await api.delete(`/api/categories/${categoryId}/posts/${postId}`);
-    navigate(`/categories/${categoryId}`);
+    try {
+      await api.delete(`/api/categories/${categoryId}/posts/${postId}`);
+      navigate(`/categories/${categoryId}`);
+    } catch (err) {
+      if (err.response && err.response.status === 403) {
+        alert("You do not have permission to delete this post.");
+      } else {
+        alert("Something went wrong while deleting post.");
+      }
+    }
   };
 
   const deleteComment = async (commentId) => {
-    await api.delete(
-      `/api/categories/${categoryId}/posts/${postId}/comments/${commentId}`
-    );
-    load();
+    try {
+        await api.delete(`/api/comments/${postId}/${commentId}`);
+        setComments(prev => prev.filter(c => c.id !== commentId));
+      } catch (err) {
+        if (err.response && err.response.status === 403) {
+          alert("You do not have permission to delete this comment.");
+        } else {
+          alert("Something went wrong while deleting comment.");
+        }
+      }
   };
 
   if (!post) return <div className="page-container">Kraunasi...</div>;
@@ -88,8 +102,7 @@ export default function PostDetail() {
             <p className="mb-1">{c.text}</p>
             <button
               className="btn btn-sm btn-outline-danger btn-pill"
-              onClick={() => deleteComment(c.id)}
-            >
+              onClick={() => deleteComment(c.id)}>
               Ištrinti
             </button>
           </div>
