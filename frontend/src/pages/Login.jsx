@@ -26,12 +26,12 @@ export default function Login() {
   return (
     <div className="page-container">
       <div className="card-forum" style={{ maxWidth: 420, margin: "2rem auto" }}>
-        <h2 className="mb-3">Login</h2>
+        <h2 className="mb-3">Prisijungti</h2>
         {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={login}>
           <div className="mb-3">
-            <label className="form-label">Username</label>
+            <label className="form-label">Slapyvardis</label>
             <input
               className="form-control"
               value={username}
@@ -41,7 +41,7 @@ export default function Login() {
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Password</label>
+            <label className="form-label">Slaptažodis</label>
             <input
               type="password"
               className="form-control"

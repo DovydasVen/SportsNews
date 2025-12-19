@@ -54,7 +54,7 @@ export default function PostDetail() {
     load();
   };
 
-  if (!post) return <div className="page-container">Kraunasi</div>;
+  if (!post) return <div className="page-container">Kraunasi...</div>;
 
   return (
     <div className="page-container">
@@ -62,7 +62,7 @@ export default function PostDetail() {
         to={`/categories/${categoryId}`}
         className="text-decoration-none mb-2 d-inline-flex align-items-center"
       >
-        <i className="fa-solid fa-chevron-left me-1"></i> Atgal prie post'u
+        <i className="fa-solid fa-chevron-left me-1"></i> Grįžti atgal
       </Link>
 
       <div className="card-forum mb-3">
@@ -75,7 +75,7 @@ export default function PostDetail() {
             className="btn btn-outline-danger btn-sm btn-pill"
             onClick={() => setShowDelete(true)}
           >
-            Delete post
+            Ištrinti
           </button>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function PostDetail() {
               className="btn btn-sm btn-outline-danger btn-pill"
               onClick={() => deleteComment(c.id)}
             >
-              Delete
+              Ištrinti
             </button>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function PostDetail() {
               onChange={(e) => setText(e.target.value)}
             />
             <button className="btn btn-primary btn-pill" type="submit">
-              Reply
+              Paskelbti
             </button>
           </form>
         </div>

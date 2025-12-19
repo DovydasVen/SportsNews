@@ -120,8 +120,6 @@ export default function CategoryPosts() {
           <p className="mb-1" style={{ color: "#d1d5db" }}>
             {p.text.length > 140 ? p.text.slice(0, 140) + "..." : p.text}
           </p>
-
-          <small style={{ color: "#9ca3af" }}>Atidaryti įrašą</small>
         </Link>
       ))}
 

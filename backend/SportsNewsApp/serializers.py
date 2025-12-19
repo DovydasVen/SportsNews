@@ -8,14 +8,20 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Post
-        fields = ['id', 'title', 'text', 'category']
+        fields = ['id', 'title', 'text', 'category', 'author']
+        read_only_fields = ['category', 'author']
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Comment
-        fields = ['id', 'text', 'post']
+        fields = ['id', 'text', 'post', 'author']
+        read_only_fields = ['post', 'author']
 
 class LoginResponseSerializer(serializers.Serializer):
     refresh = serializers.CharField()
@@ -32,6 +38,15 @@ class CustomTokenSerializer(TokenObtainPairSerializer):
         token["role"] = user.role
 
         return token
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        # add extra data to login response
+        data["username"] = self.user.username
+        data["role"] = self.user.role
+
+        return data
     
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
