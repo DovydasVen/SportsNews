@@ -16,7 +16,7 @@ export default function ConfirmModal({ show, title, text, onConfirm, onClose }) 
           </div>
           <div className="modal-footer">
             <button className="btn btn-secondary btn-pill" onClick={onClose}>
-              Cancel
+              Atšaukti
             </button>
             <button
               className="btn btn-danger btn-pill"
@@ -25,7 +25,7 @@ export default function ConfirmModal({ show, title, text, onConfirm, onClose }) 
                 onClose();
               }}
             >
-              Delete
+              Ištrinti
             </button>
           </div>
         </div>

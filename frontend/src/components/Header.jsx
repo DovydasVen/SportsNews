@@ -25,7 +25,7 @@ export default function Header() {
     <header className="header">
       <div className="header-inner">
         <Link to="/" className="logo">
-          <span>Sports Forum</span>
+          <span >Sports Forum</span>
         </Link>
 
         <button
@@ -63,7 +63,7 @@ export default function Header() {
                 Login
               </Link>
               <Link
-                className="nav-link nav-link-primary"
+                className="nav-link"
                 to="/register"
                 onClick={() => setOpen(false)}
               >

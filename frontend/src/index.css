@@ -43,10 +43,12 @@ a {
 
 .logo {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 2rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin: auto;
+  display: "block"
 }
 
 .logo i {
@@ -68,20 +70,13 @@ a {
   padding: 0.4rem 0.7rem;
   border-radius: 999px;
   transition: background 0.25s ease, transform 0.15s ease;
-}
-
-.nav-link:hover {
-  background: #1f2937;
-  transform: translateY(-1px);
-}
-
-.nav-link-primary {
   background: #2563eb;
   color: white;
 }
 
-.nav-link-primary:hover {
+.nav-link:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 .user-pill {

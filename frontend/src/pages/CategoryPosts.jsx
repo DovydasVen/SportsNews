@@ -60,7 +60,7 @@ export default function CategoryPosts() {
               className="btn btn-primary btn-pill mb-3"
               onClick={() => setShowCreate(true)}
             >
-              Create Post
+              Sukurti įrašą
             </button>
           )}
 
@@ -100,7 +100,7 @@ export default function CategoryPosts() {
                 </div>
 
                 <button className="btn btn-success btn-pill" type="submit">
-                  Pasklebti
+                  Paskelbti
                 </button>
               </form>
             </div>
