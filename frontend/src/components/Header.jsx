@@ -67,7 +67,7 @@ export default function Header() {
                 to="/register"
                 onClick={() => setOpen(false)}
               >
-                Atsijungti
+                Registruotis
               </Link>
             </>
           )}
