@@ -60,14 +60,14 @@ export default function Header() {
                 to="/login"
                 onClick={() => setOpen(false)}
               >
-                Login
+                Prisijungti
               </Link>
               <Link
                 className="nav-link"
                 to="/register"
                 onClick={() => setOpen(false)}
               >
-                Register
+                Atsijungti
               </Link>
             </>
           )}

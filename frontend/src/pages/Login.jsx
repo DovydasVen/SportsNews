@@ -52,7 +52,7 @@ export default function Login() {
           </div>
 
           <button type="submit" className="btn btn-primary w-100 btn-pill">
-            Login
+            Prisijungti
           </button>
         </form>
       </div>

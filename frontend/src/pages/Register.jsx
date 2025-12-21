@@ -16,19 +16,19 @@ export default function Register() {
       await api.post("/api/register/", { username, email, password });
       navigate("/login");
     } catch (err) {
-      setError("Registracija nepavyko (patikrink laukus ar ar vartotojas unikalus).");
+      setError("Registracija nepavyko (patikrink laukus arba vartotojo vardas jau egzistuoja).");
     }
   };
 
   return (
     <div className="page-container">
       <div className="card-forum" style={{ maxWidth: 420, margin: "2rem auto" }}>
-        <h2 className="mb-3">Register</h2>
+        <h2 className="mb-3">Registruotis</h2>
         {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={register}>
           <div className="mb-3">
-            <label className="form-label">Username</label>
+            <label className="form-label">Slapyvardis</label>
             <input
               className="form-control"
               value={username}
@@ -38,7 +38,7 @@ export default function Register() {
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Email</label>
+            <label className="form-label">Paštas</label>
             <input
               type="email"
               className="form-control"
@@ -48,7 +48,7 @@ export default function Register() {
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Password</label>
+            <label className="form-label">Slaptažodis</label>
             <input
               type="password"
               className="form-control"
@@ -59,7 +59,7 @@ export default function Register() {
           </div>
 
           <button type="submit" className="btn btn-success w-100 btn-pill">
-            Create account
+            Registruotis
           </button>
         </form>
       </div>
